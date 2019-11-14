@@ -1008,7 +1008,7 @@ describe('Test treemap clicks:', function() {
     function setupListeners(opts) {
         opts = opts || {};
 
-        trackers.treemapclick = [];
+        trackers.clicked = [];
         trackers.click = [];
         trackers.animating = [];
 
@@ -1016,8 +1016,8 @@ describe('Test treemap clicks:', function() {
         // will be in entry [0], which is easier to pick out
 
         return function() {
-            gd.on('plotly_treemapclick', function(d) {
-                trackers.treemapclick.unshift(d);
+            gd.on('plotly_clicked', function(d) {
+                trackers.clicked.unshift(d);
                 if(opts.turnOffAnimation) return false;
             });
             gd.on('plotly_click', function(d) {
@@ -1037,11 +1037,11 @@ describe('Test treemap clicks:', function() {
         .then(setupListeners())
         .then(click(gd, 2))
         .then(function() {
-            if(trackers.treemapclick.length === 1) {
-                expect(trackers.treemapclick[0].event).toBeDefined();
-                expect(trackers.treemapclick[0].points[0].label).toBe('Seth');
+            if(trackers.clicked.length === 1) {
+                expect(trackers.clicked[0].event).toBeDefined();
+                expect(trackers.clicked[0].points[0].label).toBe('Seth');
             } else {
-                fail('incorrect plotly_treemapclick triggering');
+                fail('incorrect plotly_clicked triggering');
             }
 
             if(trackers.click.length) {
@@ -1063,11 +1063,11 @@ describe('Test treemap clicks:', function() {
         .then(setupListeners())
         .then(click(gd, 8))
         .then(function() {
-            if(trackers.treemapclick.length === 1) {
-                expect(trackers.treemapclick[0].event).toBeDefined();
-                expect(trackers.treemapclick[0].points[0].label).toBe('Noam');
+            if(trackers.clicked.length === 1) {
+                expect(trackers.clicked[0].event).toBeDefined();
+                expect(trackers.clicked[0].points[0].label).toBe('Noam');
             } else {
-                fail('incorrect plotly_treemapclick triggering');
+                fail('incorrect plotly_clicked triggering');
             }
 
             if(trackers.click.length === 1) {
@@ -1098,11 +1098,11 @@ describe('Test treemap clicks:', function() {
         .then(function() {
             var msg = 'after 1st click';
 
-            if(trackers.treemapclick.length === 1) {
-                expect(trackers.treemapclick[0].event).toBeDefined(msg);
-                expect(trackers.treemapclick[0].points[0].label).toBe('Seth', msg);
+            if(trackers.clicked.length === 1) {
+                expect(trackers.clicked[0].event).toBeDefined(msg);
+                expect(trackers.clicked[0].points[0].label).toBe('Seth', msg);
             } else {
-                fail('incorrect plotly_treemapclick triggering - ' + msg);
+                fail('incorrect plotly_clicked triggering - ' + msg);
             }
 
             _assertCommon(msg);
@@ -1111,14 +1111,14 @@ describe('Test treemap clicks:', function() {
         .then(function() {
             var msg = 'after 2nd click';
 
-            // should trigger plotly_treemapclick twice, but not additional
+            // should trigger plotly_clicked twice, but not additional
             // plotly_click nor plotly_animating
 
-            if(trackers.treemapclick.length === 2) {
-                expect(trackers.treemapclick[0].event).toBeDefined(msg);
-                expect(trackers.treemapclick[0].points[0].label).toBe('Awan', msg);
+            if(trackers.clicked.length === 2) {
+                expect(trackers.clicked[0].event).toBeDefined(msg);
+                expect(trackers.clicked[0].points[0].label).toBe('Awan', msg);
             } else {
-                fail('incorrect plotly_treemapclick triggering - ' + msg);
+                fail('incorrect plotly_clicked triggering - ' + msg);
             }
 
             _assertCommon(msg);
@@ -1127,18 +1127,18 @@ describe('Test treemap clicks:', function() {
         .then(done);
     });
 
-    it('should be able to override default click behavior using plotly_treemapclick handler ()', function(done) {
+    it('should be able to override default click behavior using plotly_clicked handler ()', function(done) {
         var mock = Lib.extendDeep({}, require('@mocks/treemap_first.json'));
 
         Plotly.plot(gd, mock)
         .then(setupListeners({turnOffAnimation: true}))
         .then(click(gd, 2))
         .then(function() {
-            if(trackers.treemapclick.length === 1) {
-                expect(trackers.treemapclick[0].event).toBeDefined();
-                expect(trackers.treemapclick[0].points[0].label).toBe('Seth');
+            if(trackers.clicked.length === 1) {
+                expect(trackers.clicked[0].event).toBeDefined();
+                expect(trackers.clicked[0].points[0].label).toBe('Seth');
             } else {
-                fail('incorrect plotly_treemapclick triggering');
+                fail('incorrect plotly_clicked triggering');
             }
 
             if(trackers.click.length === 1) {

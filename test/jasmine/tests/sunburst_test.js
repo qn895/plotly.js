@@ -776,7 +776,7 @@ describe('Test sunburst clicks:', function() {
     function setupListeners(opts) {
         opts = opts || {};
 
-        trackers.sunburstclick = [];
+        trackers.clicked = [];
         trackers.click = [];
         trackers.animating = [];
 
@@ -784,8 +784,8 @@ describe('Test sunburst clicks:', function() {
         // will be in entry [0], which is easier to pick out
 
         return function() {
-            gd.on('plotly_sunburstclick', function(d) {
-                trackers.sunburstclick.unshift(d);
+            gd.on('plotly_clicked', function(d) {
+                trackers.clicked.unshift(d);
                 if(opts.turnOffAnimation) return false;
             });
             gd.on('plotly_click', function(d) {
@@ -805,11 +805,11 @@ describe('Test sunburst clicks:', function() {
         .then(setupListeners())
         .then(click(gd, 2))
         .then(function() {
-            if(trackers.sunburstclick.length === 1) {
-                expect(trackers.sunburstclick[0].event).toBeDefined();
-                expect(trackers.sunburstclick[0].points[0].label).toBe('Seth');
+            if(trackers.clicked.length === 1) {
+                expect(trackers.clicked[0].event).toBeDefined();
+                expect(trackers.clicked[0].points[0].label).toBe('Seth');
             } else {
-                fail('incorrect plotly_sunburstclick triggering');
+                fail('incorrect plotly_clicked triggering');
             }
 
             if(trackers.click.length) {
@@ -831,11 +831,11 @@ describe('Test sunburst clicks:', function() {
         .then(setupListeners())
         .then(click(gd, 1))
         .then(function() {
-            if(trackers.sunburstclick.length === 1) {
-                expect(trackers.sunburstclick[0].event).toBeDefined();
-                expect(trackers.sunburstclick[0].points[0].label).toBe('Eve');
+            if(trackers.clicked.length === 1) {
+                expect(trackers.clicked[0].event).toBeDefined();
+                expect(trackers.clicked[0].points[0].label).toBe('Eve');
             } else {
-                fail('incorrect plotly_sunburstclick triggering');
+                fail('incorrect plotly_clicked triggering');
             }
 
             if(trackers.click.length === 1) {
@@ -860,11 +860,11 @@ describe('Test sunburst clicks:', function() {
         .then(setupListeners())
         .then(click(gd, 8))
         .then(function() {
-            if(trackers.sunburstclick.length === 1) {
-                expect(trackers.sunburstclick[0].event).toBeDefined();
-                expect(trackers.sunburstclick[0].points[0].label).toBe('Noam');
+            if(trackers.clicked.length === 1) {
+                expect(trackers.clicked[0].event).toBeDefined();
+                expect(trackers.clicked[0].points[0].label).toBe('Noam');
             } else {
-                fail('incorrect plotly_sunburstclick triggering');
+                fail('incorrect plotly_clicked triggering');
             }
 
             if(trackers.click.length === 1) {
@@ -901,11 +901,11 @@ describe('Test sunburst clicks:', function() {
         .then(function() {
             var msg = 'after 1st click';
 
-            if(trackers.sunburstclick.length === 1) {
-                expect(trackers.sunburstclick[0].event).toBeDefined(msg);
-                expect(trackers.sunburstclick[0].points[0].label).toBe('Seth', msg);
+            if(trackers.clicked.length === 1) {
+                expect(trackers.clicked[0].event).toBeDefined(msg);
+                expect(trackers.clicked[0].points[0].label).toBe('Seth', msg);
             } else {
-                fail('incorrect plotly_sunburstclick triggering - ' + msg);
+                fail('incorrect plotly_clicked triggering - ' + msg);
             }
 
             _assertCommon(msg);
@@ -914,14 +914,14 @@ describe('Test sunburst clicks:', function() {
         .then(function() {
             var msg = 'after 2nd click';
 
-            // should trigger plotly_sunburstclick twice, but not additional
+            // should trigger plotly_clicked twice, but not additional
             // plotly_click nor plotly_animating
 
-            if(trackers.sunburstclick.length === 2) {
-                expect(trackers.sunburstclick[0].event).toBeDefined(msg);
-                expect(trackers.sunburstclick[0].points[0].label).toBe('Awan', msg);
+            if(trackers.clicked.length === 2) {
+                expect(trackers.clicked[0].event).toBeDefined(msg);
+                expect(trackers.clicked[0].points[0].label).toBe('Awan', msg);
             } else {
-                fail('incorrect plotly_sunburstclick triggering - ' + msg);
+                fail('incorrect plotly_clicked triggering - ' + msg);
             }
 
             _assertCommon(msg);
@@ -930,18 +930,18 @@ describe('Test sunburst clicks:', function() {
         .then(done);
     });
 
-    it('should be able to override default click behavior using plotly_sunburstclick handler ()', function(done) {
+    it('should be able to override default click behavior using plotly_clicked handler ()', function(done) {
         var mock = Lib.extendDeep({}, require('@mocks/sunburst_first.json'));
 
         Plotly.plot(gd, mock)
         .then(setupListeners({turnOffAnimation: true}))
         .then(click(gd, 2))
         .then(function() {
-            if(trackers.sunburstclick.length === 1) {
-                expect(trackers.sunburstclick[0].event).toBeDefined();
-                expect(trackers.sunburstclick[0].points[0].label).toBe('Seth');
+            if(trackers.clicked.length === 1) {
+                expect(trackers.clicked[0].event).toBeDefined();
+                expect(trackers.clicked[0].points[0].label).toBe('Seth');
             } else {
-                fail('incorrect plotly_sunburstclick triggering');
+                fail('incorrect plotly_clicked triggering');
             }
 
             if(trackers.click.length === 1) {

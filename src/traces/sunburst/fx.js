@@ -217,7 +217,7 @@ module.exports = function attachFxHandlers(sliceTop, entry, gd, cd, opts) {
         var fullLayoutNow = gd._fullLayout;
         var traceNow = gd._fullData[trace.index];
 
-        var clickVal = Events.triggerHandler(gd, 'plotly_' + trace.type + 'click', {
+        var clickVal = Events.triggerHandler(gd, 'plotly_clicked', {
             points: [makeEventData(pt, traceNow, opts.eventDataKeys)],
             event: d3.event
         });
