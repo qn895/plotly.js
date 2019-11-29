@@ -184,6 +184,8 @@ proto.updateProjection = function(fullLayout, geoLayout) {
     var rotation = projLayout.rotation || {};
     var center = geoLayout.center || {};
 
+    // TODO where to put the auto-bounding box logic ??
+
     var projection = this.projection = getProjection(geoLayout);
 
     // set 'pre-fit' projection

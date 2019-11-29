@@ -44,6 +44,9 @@ function plotGeo(gd) {
         var geo = geoLayout._subplot;
 
         if(!geo) {
+            // geo = new Geo(gd, geoId);
+            // fullLayout[geoId]._subplot = geo;
+
             geo = createGeo({
                 id: geoId,
                 graphDiv: gd,
