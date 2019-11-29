@@ -3,6 +3,7 @@ var Choropleth = require('@src/traces/choropleth');
 var Plotly = require('@lib');
 var Plots = require('@src/plots/plots');
 var Lib = require('@src/lib');
+var loggers = require('@src/lib/loggers');
 
 var d3 = require('d3');
 var createGraphDiv = require('../assets/create_graph_div');
@@ -254,7 +255,7 @@ describe('choropleth drawing', function() {
     afterEach(destroyGraphDiv);
 
     it('should not throw an error with bad locations', function(done) {
-        spyOn(Lib, 'log');
+        spyOn(loggers, 'log');
         Plotly.newPlot(gd, [{
             locations: ['canada', 0, null, '', 'utopia'],
             z: [1, 2, 3, 4, 5],
@@ -263,7 +264,7 @@ describe('choropleth drawing', function() {
         }])
         .then(function() {
             // only utopia logs - others are silently ignored
-            expect(Lib.log).toHaveBeenCalledTimes(1);
+            expect(loggers.log).toHaveBeenCalledTimes(1);
         })
         .catch(failTest)
         .then(done);

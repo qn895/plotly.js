@@ -42,12 +42,28 @@ module.exports = overrideAll({
     },
     locationmode: {
         valType: 'enumerated',
-        values: ['ISO-3', 'USA-states', 'country names'],
+        values: ['ISO-3', 'USA-states', 'country names', 'geojson-id'],
         role: 'info',
         dflt: 'ISO-3',
         description: [
             'Determines the set of locations used to match entries in `locations`',
-            'to regions on the map.'
+            'to regions on the map.',
+            '.... TODO add info about *geojson-id*'
+        ].join(' ')
+    },
+
+    geojson: {
+        valType: 'any',
+        role: 'info',
+        editType: 'calc',
+        description: [
+            'Sets the GeoJSON data associated with this trace.',
+            'Can be set as a valid GeoJSON object or as URL string',
+            'Note that we only accept GeoJSON of type *FeatureCollection* and *Feature*',
+            'with geometries of type *Polygon* and *MultiPolygon*.',
+            '..',
+            '.. mention it is optional',
+            '... add topojson support ???'
         ].join(' ')
     },
 

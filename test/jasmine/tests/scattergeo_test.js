@@ -1,6 +1,7 @@
 var Plotly = require('@lib');
 var Lib = require('@src/lib');
 var BADNUM = require('@src/constants/numerical').BADNUM;
+var loggers = require('@src/lib/loggers');
 
 var ScatterGeo = require('@src/traces/scattergeo');
 
@@ -397,7 +398,7 @@ describe('scattergeo drawing', function() {
     afterEach(destroyGraphDiv);
 
     it('should not throw an error with bad locations', function(done) {
-        spyOn(Lib, 'log');
+        spyOn(loggers, 'log');
         Plotly.newPlot(gd, [{
             locations: ['canada', 0, null, '', 'utopia'],
             locationmode: 'country names',
@@ -405,7 +406,7 @@ describe('scattergeo drawing', function() {
         }])
         .then(function() {
             // only utopia logs - others are silently ignored
-            expect(Lib.log).toHaveBeenCalledTimes(1);
+            expect(loggers.log).toHaveBeenCalledTimes(1);
         })
         .catch(failTest)
         .then(done);

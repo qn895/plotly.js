@@ -33,6 +33,11 @@ module.exports = extendFlat({
         editType: 'calc',
         description: 'Sets the color values.'
     },
+    geojson: extendFlat({}, scatterGeoAttrs.geojson, {
+        description: [
+            ''
+        ].join(' ')
+    }),
     text: extendFlat({}, scatterGeoAttrs.text, {
         description: 'Sets the text elements associated with each location.'
     }),
