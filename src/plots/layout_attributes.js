@@ -140,6 +140,36 @@ module.exports = {
         }),
         editType: 'layoutstyle'
     },
+    uniformtext: {
+        minscale: {
+            valType: 'number',
+            min: 0,
+            max: 1,
+            dflt: 0,
+            role: 'info',
+            editType: 'plot',
+            description: [
+                'Sets the minimum text scale within the trace.',
+                'Please note that when this parameter is set to',
+                'a value other than zero the text won\'t be rotated',
+                'by default within bars.'
+            ].join(' ')
+        },
+
+        mode: {
+            valType: 'enumerated',
+            values: ['hide', 'show'],
+            dflt: 'hide',
+            role: 'info',
+            editType: 'plot',
+            description: [
+                'Determines how text element within the is displayed',
+                'if it is smaller than the minimum scale defined `minscale`.'
+            ].join(' ')
+        },
+
+        editType: 'plot'
+    },
     autosize: {
         valType: 'boolean',
         role: 'info',

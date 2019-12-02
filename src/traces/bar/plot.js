@@ -374,6 +374,8 @@ function appendBarText(gd, plotinfo, bar, calcTrace, i, x0, x1, y0, y1, opts, ma
         }
     }
 
+    var angle = fullLayout.uniformtext.minscale ? 0 : trace.textangle;
+
     // compute text transform
     var transform, constrained;
     if(textPosition === 'outside') {
@@ -381,25 +383,38 @@ function appendBarText(gd, plotinfo, bar, calcTrace, i, x0, x1, y0, y1, opts, ma
             trace.constraintext === 'both' ||
             trace.constraintext === 'outside';
 
-        transform = Lib.getTextTransform(toMoveOutsideBar(x0, x1, y0, y1, textBB, {
+        transform = toMoveOutsideBar(x0, x1, y0, y1, textBB, {
             isHorizontal: isHorizontal,
             constrained: constrained,
-            angle: trace.textangle
-        }));
+            angle: angle
+        });
     } else {
         constrained =
             trace.constraintext === 'both' ||
             trace.constraintext === 'inside';
 
-        transform = Lib.getTextTransform(toMoveInsideBar(x0, x1, y0, y1, textBB, {
+        transform = toMoveInsideBar(x0, x1, y0, y1, textBB, {
             isHorizontal: isHorizontal,
             constrained: constrained,
-            angle: trace.textangle,
+            angle: angle,
             anchor: trace.insidetextanchor
-        }));
+        });
     }
 
-    transition(textSelection, opts, makeOnCompleteCallback).attr('transform', transform);
+    if(fullLayout.uniformtext.minscale) {
+        var minS = '_' + trace.type + 'Text_minscale';
+        transform.hide = transform.scale < fullLayout.uniformtext.minscale;
+
+        fullLayout[minS] = Math.min(
+            fullLayout[minS] || 1,
+            Math.max(transform.scale, fullLayout.uniformtext.minscale)
+        );
+    }
+
+    calcBar.transform = transform;
+
+    transition(textSelection, opts, makeOnCompleteCallback)
+        .attr('transform', Lib.getTextTransform(transform));
 }
 
 function getRotateFromAngle(angle) {
