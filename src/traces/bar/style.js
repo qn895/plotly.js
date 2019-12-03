@@ -22,7 +22,7 @@ var helpers = require('./helpers');
 
 function resizeText(gd, gTrace, traceType) {
     var fullLayout = gd._fullLayout;
-    var minScale = fullLayout['_' + traceType + 'Text_minscale'];
+    var minScale = fullLayout['_' + traceType + 'Text_minsize'];
 
     if(minScale) {
         var shouldHide = fullLayout.uniformtext.mode === 'hide';

@@ -244,7 +244,7 @@ function appendBarText(gd, plotinfo, bar, calcTrace, i, x0, x1, y0, y1, opts, ma
     var fullLayout = gd._fullLayout;
     var textPosition;
 
-    function appendTextNode(bar, text, textFont) {
+    function appendTextNode(bar, text, font) {
         var textSelection = Lib.ensureSingle(bar, 'text')
             .text(text)
             .attr({
@@ -254,7 +254,7 @@ function appendBarText(gd, plotinfo, bar, calcTrace, i, x0, x1, y0, y1, opts, ma
                 // tex and regular text together
                 'data-notex': 1
             })
-            .call(Drawing.font, textFont)
+            .call(Drawing.font, font)
             .call(svgTextUtils.convertToTspans, gd);
 
         return textSelection;
@@ -318,6 +318,7 @@ function appendBarText(gd, plotinfo, bar, calcTrace, i, x0, x1, y0, y1, opts, ma
     var textBB;
     var textWidth;
     var textHeight;
+    var font;
 
     if(textPosition === 'outside') {
         if(!isOutmostBar && !calcBar.hasB) textPosition = 'inside';
@@ -327,7 +328,8 @@ function appendBarText(gd, plotinfo, bar, calcTrace, i, x0, x1, y0, y1, opts, ma
         if(isOutmostBar) {
             // draw text using insideTextFont and check if it fits inside bar
             textPosition = 'inside';
-            textSelection = appendTextNode(bar, text, insideTextFont);
+            font = insideTextFont;
+            textSelection = appendTextNode(bar, text, font);
 
             textBB = Drawing.bBox(textSelection.node()),
             textWidth = textBB.width,
@@ -357,9 +359,8 @@ function appendBarText(gd, plotinfo, bar, calcTrace, i, x0, x1, y0, y1, opts, ma
     }
 
     if(!textSelection) {
-        textSelection = appendTextNode(bar, text,
-                (textPosition === 'outside') ?
-                outsideTextFont : insideTextFont);
+        font = (textPosition === 'outside') ? outsideTextFont : insideTextFont;
+        textSelection = appendTextNode(bar, text, font);
 
         var currentTransform = textSelection.attr('transform');
         textSelection.attr('transform', '');
@@ -374,7 +375,7 @@ function appendBarText(gd, plotinfo, bar, calcTrace, i, x0, x1, y0, y1, opts, ma
         }
     }
 
-    var angle = fullLayout.uniformtext.minscale ? 0 : trace.textangle;
+    var angle = fullLayout.uniformtext.minsize ? 0 : trace.textangle;
 
     // compute text transform
     var transform, constrained;
@@ -401,13 +402,13 @@ function appendBarText(gd, plotinfo, bar, calcTrace, i, x0, x1, y0, y1, opts, ma
         });
     }
 
-    if(fullLayout.uniformtext.minscale) {
-        var minS = '_' + trace.type + 'Text_minscale';
-        transform.hide = transform.scale < fullLayout.uniformtext.minscale;
+    if(fullLayout.uniformtext.minsize) {
+        var minS = '_' + trace.type + 'Text_minsize';
+        transform.hide = transform.scale < fullLayout.uniformtext.minsize;
 
         fullLayout[minS] = Math.min(
-            fullLayout[minS] || 1,
-            Math.max(transform.scale, fullLayout.uniformtext.minscale)
+            fullLayout[minS] || Infinity,
+            Math.max(transform.scale , fullLayout.uniformtext.minsize)
         );
     }
 

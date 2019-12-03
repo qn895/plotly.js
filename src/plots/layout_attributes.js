@@ -141,7 +141,7 @@ module.exports = {
         editType: 'layoutstyle'
     },
     uniformtext: {
-        minscale: {
+        minsize: {
             valType: 'number',
             min: 0,
             max: 1,
@@ -149,7 +149,7 @@ module.exports = {
             role: 'info',
             editType: 'plot',
             description: [
-                'Sets the minimum text scale within the trace.',
+                'Sets the minimum text size between traces of the same type.',
                 'Please note that when this parameter is set to',
                 'a value other than zero the text won\'t be rotated',
                 'by default within bars.'
@@ -164,7 +164,7 @@ module.exports = {
             editType: 'plot',
             description: [
                 'Determines how text element within the is displayed',
-                'if it is smaller than the minimum scale defined `minscale`.'
+                'if it is smaller than the minimum scale defined `minsize`.'
             ].join(' ')
         },
 

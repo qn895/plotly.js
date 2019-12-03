@@ -1462,7 +1462,7 @@ plots.supplyLayoutGlobalDefaults = function(layoutIn, layoutOut, formatObj) {
     coerce('title.pad.b');
     coerce('title.pad.l');
 
-    coerce('uniformtext.minscale');
+    coerce('uniformtext.minsize');
     coerce('uniformtext.mode');
 
     // Make sure that autosize is defaulted to *true*

@@ -517,19 +517,19 @@ function plotOne(gd, cd, element, transitionOpts) {
         }
     };
 
-    var minS = '_' + trace.type + 'Text_minscale';
+    var minS = '_' + trace.type + 'Text_minsize';
     fullLayout[minS] = 0;
 
     var strTransform = function(d) {
         var transform = d.transform;
 
         // same process as bars
-        if(fullLayout.uniformtext.minscale) {
-            transform.hide = transform.scale < fullLayout.uniformtext.minscale;
+        if(fullLayout.uniformtext.minsize) {
+            transform.hide = transform.scale < fullLayout.uniformtext.minsize;
 
             fullLayout[minS] = Math.min(
-                fullLayout[minS] || 1,
-                Math.max(transform.scale, fullLayout.uniformtext.minscale)
+                fullLayout[minS] || Infinity,
+                Math.max(transform.scale, fullLayout.uniformtext.minsize)
             );
         }
 
